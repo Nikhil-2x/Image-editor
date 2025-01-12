@@ -10,7 +10,7 @@ load_dotenv()
 
 connection = pymysql.connect(
     host=os.getenv("DB_HOST"),
-    port=os.getenv("DB_PORT", 3306),
+    port=os.getenv("DB_PORT"),
     user=os.getenv("DB_USER"),
     password=os.getenv("DB_PASSWORD"),
     database=os.getenv("DB_NAME"),
@@ -147,4 +147,4 @@ def view_feedback():
     return render_template('admin_feedback.html', feedback_data=feedback_data)
 
 
-app.run(debug=True,)
+app.run(debug=True)
