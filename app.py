@@ -3,7 +3,7 @@ from werkzeug.utils import secure_filename
 import cv2
 import os
 
-port = int(os.environ.get("PORT", 8080))
+# port = int(os.environ.get("PORT", 8080))
 
 UPLOAD_FOLDER = 'upload'
 ALLOWED_EXTENSIONS = {'png', 'webp', 'jpg', 'jpeg', 'gif'}
@@ -89,4 +89,4 @@ def edit():
     return render_template("index.html")
 
 
-app.run(debug=False, host='0.0.0.0', port=port)
+#app.run(debug=False, host='0.0.0.0', port=port)
