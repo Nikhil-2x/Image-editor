@@ -19,7 +19,7 @@ A Flask-based web application that allows users to upload images, apply various 
 - Clone the Repository
     ```bash
     git clone https://github.com/Nikhil-2x/Image-editor.git
-cd Image-editor
+    cd Image-editor
     ```
 - Set Up Virtual Environment
     ```bash
