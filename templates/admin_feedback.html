@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto p-6">
+    <h1 class="text-4xl text-center mb-6 font-bold text-white">All User Feedback</h1>
+    
+    <table class="min-w-full table-auto text-white">
+        <thead>
+            <tr>
+                <th class="px-4 py-2">Name</th>
+                <th class="px-4 py-2">Email</th>
+                <th class="px-4 py-2">Feedback</th>
+                <th class="px-4 py-2">Submitted At</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for feedback in feedback_data %}
+            <tr>
+                <td class="px-4 py-2">{{ feedback.name }}</td>
+                <td class="px-4 py-2">{{ feedback.email }}</td>
+                <td class="px-4 py-2">{{ feedback.feedback_text }}</td>
+                <td class="px-4 py-2">{{ feedback.created_at }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

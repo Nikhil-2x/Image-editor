@@ -1,11 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mx-auto p-6">
-    <h1 class="text-3xl text-center mb-6">About Image Editor</h1>
-    <p class="text-lg text-center">
-        This simple image editor allows you to upload an image and process it into various formats or convert it to grayscale. 
-        Powered by Flask and OpenCV, it's a quick tool for basic image manipulation.
-    </p>
+<div class="flex items-center justify-center min-h-screen bg-gray-900">
+    <div class="container mx-auto p-6 max-w-2xl bg-gray-800 rounded-lg shadow-lg text-center">
+        <h1 class="text-3xl font-bold text-white mb-6">About Image Editor</h1>
+        <p class="text-lg text-gray-300 mb-6">
+            This simple image editor allows you to upload an image and process it into various formats or convert it to grayscale. 
+            Powered by Flask and OpenCV, it's a quick tool for basic image manipulation.
+        </p>
+
+        <!-- Back to Home Button -->
+        <a href="/" class="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 shadow-md transform transition-transform duration-300 hover:scale-105">
+            Back to Home
+        </a>
+    </div>
 </div>
 {% endblock %}
