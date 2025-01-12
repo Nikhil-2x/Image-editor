@@ -7,21 +7,15 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Retrieve credentials from environment variables
-db_host = os.getenv('DB_HOST', 'localhost')  # Default: localhost
-db_user = os.getenv('DB_USER', 'root')      # Default: root
-db_password = os.getenv('DB_PASSWORD', '')  # Default: empty password
-db_name = os.getenv('DB_NAME', 'credentials')  # Default: credentials
 
-
-# MySQL Configuration using PyMySQL
 connection = pymysql.connect(
-    host=db_host,
-    user=db_user,
-    password=db_password,
-    database=db_name,
-    cursorclass=pymysql.cursors.DictCursor,
+    host=os.getenv("DB_HOST"),
+    port=int(os.getenv("DB_PORT")),
+    user=os.getenv("DB_USER"),
+    password=os.getenv("DB_PASSWORD"),
+    database=os.getenv("DB_NAME"),
 )
+
 
 # port = int(os.environ.get("PORT", 8080))
 
@@ -153,4 +147,4 @@ def view_feedback():
     return render_template('admin_feedback.html', feedback_data=feedback_data)
 
 
-# app.run(debug=True, port=8080)
+app.run(debug=True,)
