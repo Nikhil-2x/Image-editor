@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Page </title>
-</head>
-<body>
-    This is about page
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto p-6">
+    <h1 class="text-3xl text-center mb-6">About Image Editor</h1>
+    <p class="text-lg text-center">
+        This simple image editor allows you to upload an image and process it into various formats or convert it to grayscale. 
+        Powered by Flask and OpenCV, it's a quick tool for basic image manipulation.
+    </p>
+</div>
+{% endblock %}
