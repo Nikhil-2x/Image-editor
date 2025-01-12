@@ -3,15 +3,24 @@ from werkzeug.utils import secure_filename
 import cv2
 import os
 import pymysql.cursors
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# Retrieve credentials from environment variables
+db_host = os.getenv('DB_HOST', 'localhost')  # Default: localhost
+db_user = os.getenv('DB_USER', 'root')      # Default: root
+db_password = os.getenv('DB_PASSWORD', '')  # Default: empty password
+db_name = os.getenv('DB_NAME', 'credentials')  # Default: credentials
 
 
 # MySQL Configuration using PyMySQL
 connection = pymysql.connect(
-    host='localhost',  # Replace with your database host
-    user='root',       # Replace with your database username
-    password='#Nick@178681',       # Replace with your database password
-    database='credentials',  # Replace with your database name
-    cursorclass=pymysql.cursors.DictCursor
+    host=db_host,
+    user=db_user,
+    password=db_password,
+    database=db_name,
+    cursorclass=pymysql.cursors.DictCursor,
 )
 
 # port = int(os.environ.get("PORT", 8080))
@@ -64,7 +73,6 @@ def processImage(filename, operation):
     return newFilename
 
     
-
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -99,35 +107,6 @@ def edit():
 
     return render_template("index.html")
 
-@app.route("/settings", methods=["GET", "POST"])
-def settings():
-    # Example of default settings, you can load these from session or database
-    theme = 'light'  # Default theme
-    default_operation = 'cgray'  # Default operation
-
-    if request.method == "POST":
-        # Save the user's selected settings
-        theme = request.form.get('theme')
-        default_operation = request.form.get('default_operation')
-
-        # You can save these settings to a session or database here
-        flash("Settings saved successfully!")
-        return redirect(url_for("settings"))
-
-    return render_template("settings.html", theme=theme, default_operation=default_operation)
-
-@app.route("/contact", methods=["GET", "POST"])
-def contact():
-    if request.method == "POST":
-        name = request.form.get('name')
-        email = request.form.get('email')
-        message = request.form.get('message')
-        
-        # Here you can send the email or store the feedback in a database
-        flash("Thank you for your feedback! We'll get back to you soon.")
-        return redirect(url_for('contact'))
-
-    return render_template("contact.html")
 
 
 @app.route('/feedback', methods=['GET', 'POST'])
@@ -174,4 +153,4 @@ def view_feedback():
     return render_template('admin_feedback.html', feedback_data=feedback_data)
 
 
-app.run(debug=True, port=8080)
+# app.run(debug=True, port=8080)

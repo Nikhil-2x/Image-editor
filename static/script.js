@@ -46,4 +46,3 @@ fileInput.addEventListener("input", function () {
     }, 500);
   }
 });
-

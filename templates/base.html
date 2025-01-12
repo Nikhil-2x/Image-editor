@@ -1,35 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Image Editor</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="/static/styles/style.css" rel="stylesheet">
-</head>
-<body class="bg-gray-900 text-white">
-
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link href="/static/styles/style.css" rel="stylesheet" />
+  </head>
+  <body class="bg-gray-900 text-white">
     <!-- Navbar -->
-    <nav class="bg-gray-800 p-4">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="/" class="text-2xl font-semibold text-white">Image Editor</a>
-            <div class="space-x-6">
-                <a href="/" class="hover:text-gray-400">Home</a>
-                <a href="/feedback" class="hover:text-gray-400 transition">Feedback</a>
-                <a href="/about" class="hover:text-gray-400">About</a>
-            </div>
+    <nav class="bg-gray-800 p-4 shadow-lg">
+      <div
+        class="container mx-auto flex flex-wrap justify-between items-center"
+      >
+        <!-- Logo -->
+        <a
+          href="/"
+          class="text-xl font-bold text-white hover:text-blue-400 transition"
+        >
+          <span
+            class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-green-400"
+          >
+            Image Editor
+          </span>
+        </a>
+
+        <!-- Links (Responsive Design) -->
+        <div class="flex space-x-4 text-sm md:text-base">
+          <a href="/" class="text-white hover:text-blue-400 transition">
+            Home
+          </a>
+          <a href="/feedback" class="text-white hover:text-blue-400 transition">
+            Feedback
+          </a>
+          <a href="/about" class="text-white hover:text-blue-400 transition">
+            About
+          </a>
         </div>
+      </div>
     </nav>
 
     <!-- Main Content -->
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+    <main>{% block content %} {% endblock %}</main>
 
     <!-- Footer  -->
     <footer class="bg-gray-800 py-4 mt-10">
-        <p class="text-center text-sm text-gray-500">© 2025 Image Editor</p>
+      <p class="text-center text-sm text-gray-500">© 2025 Image Editor</p>
     </footer>
-
-</body>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
 </html>
