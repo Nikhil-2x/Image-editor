@@ -59,3 +59,42 @@ button {
     text-decoration: underline;
     font-weight: bold;
 }
+
+/* Enhanced Navbar Styling */
+nav {
+    transition: background-color 0.3s ease;
+}
+
+nav:hover {
+    background-color: #2d3748;
+}
+
+nav a:hover {
+    color: #ffeb3b;
+    /* Yellow text on hover */
+    transform: scale(1.1);
+    transition: all 0.3s ease-in-out;
+}
+
+
+/* Dashed border container hover effect */
+.border-dashed:hover {
+    border-color: #3b82f6;
+    /* Blue */
+    transform: scale(1.02);
+    /* Slight zoom on hover */
+    transition: all 0.3s ease-in-out;
+}
+
+/* Image preview animation */
+#image-preview {
+    opacity: 0;
+    transform: scale(0.9);
+    /* Start shrunken */
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+#image-preview.opacity-100 {
+    opacity: 1;
+    transform: scale(1);
+}

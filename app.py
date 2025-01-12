@@ -74,9 +74,17 @@ def edit():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            new = processImage(filename, operation)
-            flash(f"Your image has been processed and is available <a href='/{new}' target='_blank' class='text-yellow-300 font-semibold'>here</a>")
-            return redirect(url_for('home'))
+            new_file_path = processImage(filename, operation)
+
+            if new_file_path is None:  # If image processing failed
+                flash("Image processing failed. Please try again.")
+                return redirect(url_for('home'))
+
+            # Pass the processed image URL to the result page
+            processed_image_url = new_file_path.replace("static/", "/static/")
+            return render_template("result.html", processed_image_url=processed_image_url)
+
     return render_template("index.html")
+
 
 app.run(debug=True, port=8080)

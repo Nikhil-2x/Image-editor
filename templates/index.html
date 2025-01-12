@@ -1,56 +1,88 @@
-{% extends 'base.html' %}
-
-{% block content %}
-<div class="container mx-auto p-6">
-    <h1 class="text-4xl text-center mb-6 font-bold text-white">Edit Your Images</h1>
+{% extends 'base.html' %} {% block content %}
+<div class="flex items-center justify-center min-h-screen">
+  <div class="container mx-auto p-6">
+    <h1 class="text-4xl text-center mb-6 font-bold text-white">
+      Edit Your Images
+    </h1>
 
     <!-- Flash Message -->
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-        <div class="flash-message text-center bg-green-500 text-white p-4 rounded-lg mb-4 fade-in shadow-lg">
-            {{ messages[0] | safe }}
-        </div>
-    {% endif %}
-    {% endwith %}
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <div
+      class="flash-message text-center bg-green-500 text-white p-4 rounded-lg mb-4 fade-in shadow-lg"
+    >
+      {{ messages[0] | safe }}
+    </div>
+    {% endif %} {% endwith %}
 
     <!-- Form -->
-    <form action="/edit" method="POST" enctype="multipart/form-data" class="space-y-6">
-        <div class="flex justify-center">
-            <input type="file" name="file" class="file-input transition-transform duration-300 transform hover:scale-105 text-lg py-2 px-4 border rounded-lg bg-gray-800 text-white w-full max-w-md" required>
-        </div>
+    <form
+      action="/edit"
+      method="POST"
+      enctype="multipart/form-data"
+      class="space-y-6"
+    >
+      <div class="flex justify-center">
+        <input
+          type="file"
+          name="file"
+          class="file-input transition-transform duration-300 transform hover:scale-105 text-lg py-2 px-4 border rounded-lg bg-gray-800 text-white w-full max-w-md"
+          required
+        />
+      </div>
 
-        <div class="flex justify-center">
-            <select name="operation" class="select-input py-2 px-4 border rounded-lg bg-gray-800 text-white w-full max-w-md">
-                <option value="cgray">Convert to Grayscale</option>
-                <option value="cwebp">Convert to WebP</option>
-                <option value="cjpg">Convert to JPG</option>
-                <option value="cpng">Convert to PNG</option>
-                <option value="blur">Apply Blur</option>
-                <option value="edges">Detect Edges</option>
-                <option value="resize">Resize Image</option>
-            </select>
-        </div>
+      <div class="flex justify-center">
+        <select
+          name="operation"
+          class="select-input py-2 px-4 border rounded-lg bg-gray-800 text-white w-full max-w-md"
+        >
+          <option value="cgray">Convert to Grayscale</option>
+          <option value="cwebp">Convert to WebP</option>
+          <option value="cjpg">Convert to JPG</option>
+          <option value="cpng">Convert to PNG</option>
+          <option value="blur">Apply Blur</option>
+          <option value="edges">Detect Edges</option>
+          <option value="resize">Resize Image</option>
+        </select>
+      </div>
 
-        <div class="flex justify-center">
-            <button type="submit" class="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 shadow-md transform transition-transform duration-300 hover:scale-105">
-                Process Image
-            </button>
+      <div class="flex justify-center">
+        <button
+          type="submit"
+          class="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 shadow-md transform transition-transform duration-300 hover:scale-105"
+        >
+          Process Image
+        </button>
+      </div>
+
+      <div class="flex flex-col justify-center items-center mt-6 space-y-3">
+        <label for="image-preview" class="text-gray-400 text-sm font-semibold"
+          >Preview of Selected Image:</label
+        >
+        
+        
+        <div class="border-4 border-dashed border-gray-700 rounded-lg p-4">
+          <img
+            id="image-preview"
+            src=""
+            alt="Image Preview"
+            class="rounded-lg shadow-lg opacity-0 transition-opacity duration-500 transform scale-90 hidden max-h-60"
+          />
         </div>
+      </div>
     </form>
+  </div>
 </div>
 
 <!-- Add this spinner in index.html -->
-<div id="loading-spinner" class="hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex justify-center items-center">
-  <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
+<div
+  id="loading-spinner"
+  class="hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex justify-center items-center"
+>
+  <div
+    class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"
+  ></div>
 </div>
 
-<script>
-  const form = document.querySelector("form");
-  const spinner = document.getElementById("loading-spinner");
-
-  form.addEventListener("submit", () => {
-    spinner.classList.remove("hidden");
-  });
-</script>
+<script src="static/script.js"></script>
 
 {% endblock %}
