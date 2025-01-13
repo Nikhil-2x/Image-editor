@@ -1,6 +1,6 @@
 # Image Editor
 
-A Flask-based web application that allows users to upload images, apply various transformations (like grayscale, blur, edge detection, etc.), preview the processed image, and download the result. The project uses OpenCV for image processing and Tailwind CSS for styling.
+A Flask-based web application that allows users to upload images, apply various transformations (like grayscale, blur, edge detection, etc.), preview the processed image, and download the result. The project uses OpenCV for image processing, MongoDB Atlas for feedback storage, and Tailwind CSS for styling.
 
 ## Features
 
@@ -17,10 +17,9 @@ A Flask-based web application that allows users to upload images, apply various 
 - Responsive design with animations.
 - Feedback Form:
   - Collect user feedback with details like name, email, and feedback message.
-  - Store feedback securely in a MySQL database.
-  - Admin page to view all feedback
+  - Feedback is securely stored in MongoDB Atlas.
 - Security:
-  - Credentials for MySQL are stored in a .env file using python-dotenv.
+  - MongoDB credentials are stored in a .env file using python-dotenv.
 
 ## Setup
 
@@ -38,25 +37,12 @@ A Flask-based web application that allows users to upload images, apply various 
   ```bash
   pip install -r requirements.txt
   ```
-- Configure Database
-  - Create a MySQL database named credentials and a feedback table:
-    ```sql
-        CREATE DATABASE credentials;
-        USE credentials;
-        CREATE TABLE feedback (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            name VARCHAR(100),
-            email VARCHAR(100),
-            feedback_text TEXT,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        );
+- Configure MongoDB Atlas
+  - Set up a MongoDB Atlas cluster and create a database named ytmanager.
+  - Inside the ytmanager database, create a collection named credentials for storing feedback.
+  - Add your MongoDB URI to the .env file:
     ```
-- Add your database credentials to a .env file:
-
-  ```
-  DB_HOST=localhost
-  DB_USER=root
-  DB_PASSWORD=your_password
-  DB_NAME=credentials
-
-  ```
+    MONGO_URI=mongodb+srv://<username>:<password>@<cluster-url>/<database>?retryWrites=true&w=majority
+    ```
+    Replace <username>, <password>, <cluster-url>, and <database> with your actual MongoDB Atlas credentials.
+- Run the Application
