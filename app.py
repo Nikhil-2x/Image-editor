@@ -2,19 +2,29 @@ from flask import Flask, render_template, request, flash, redirect, url_for
 from werkzeug.utils import secure_filename
 import cv2
 import os
-import pymysql.cursors
+from pymongo import MongoClient
 from dotenv import load_dotenv
+from datetime import datetime
 
-load_dotenv()
 
 
-connection = pymysql.connect(
-    host=os.getenv("DB_HOST"),
-    port=os.getenv("DB_PORT"),
-    user=os.getenv("DB_USER"),
-    password=os.getenv("DB_PASSWORD"),
-    database=os.getenv("DB_NAME"),
-)
+# Load environment variables from .env file
+try:
+    load_dotenv()
+except Exception as e:
+    print(f"Error loading environment variables: {e}")
+
+# Get the MongoDB URI from environment variables
+MONGO_URI = os.getenv("MONGO_URI")
+
+# Connect to MongoDB using the URI
+try:
+    client = MongoClient(MONGO_URI)
+    db = client["ytmanager"]
+    feedback_collection = db["credentials"]
+except Exception as e:
+    print(f"Error connecting to MongoDB: {e}")
+    exit()
 
 
 # port = int(os.environ.get("PORT", 8080))
@@ -110,36 +120,40 @@ def feedback():
         name = request.form['name']
         email = request.form['email']
         feedback_text = request.form['feedback']
-        
+
         # Check if feedback content is empty
         if not feedback_text:
             flash("Feedback cannot be blank. Please provide your input.", "error")
             return redirect(url_for('feedback'))
 
-        # Insert the feedback into the database
+        # Insert the feedback into the MongoDB collection
+        feedback_data = {
+            "name": name,
+            "email": email,
+            "feedback_text": feedback_text,
+            "submitted_at": datetime.utcnow()  # Store timestamp in UTC
+        }
+
         try:
-            with connection.cursor() as cursor:
-                sql = "INSERT INTO feedback (name, email, feedback_text) VALUES (%s, %s, %s)"
-                cursor.execute(sql, (name, email, feedback_text))
-                connection.commit()
+            feedback_collection.insert_one(feedback_data)
+            flash("Thank you for your feedback!", "success")
         except Exception as e:
-            print(f"Error: {e}")
-            connection.rollback()
+            flash(f"Error saving feedback: {e}", "error")
 
         return redirect(url_for('feedback_received'))
 
     return render_template('feedback.html')
 
+
 @app.route('/feedback_received')
 def feedback_received():
     return render_template('feedback_received.html')
 
+
 @app.route('/admin/feedback')
 def view_feedback():
     try:
-        with connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM feedback ORDER BY created_at DESC")
-            feedback_data = cursor.fetchall()
+        feedback_data = list(feedback_collection.find().sort("submitted_at", -1))
     except Exception as e:
         print(f"Error: {e}")
         feedback_data = []
@@ -147,4 +161,4 @@ def view_feedback():
     return render_template('admin_feedback.html', feedback_data=feedback_data)
 
 
-app.run(debug=True)
+# app.run(debug=True)

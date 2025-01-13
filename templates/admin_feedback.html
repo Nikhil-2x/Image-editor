@@ -19,7 +19,9 @@
                 <td class="px-4 py-2">{{ feedback.name }}</td>
                 <td class="px-4 py-2">{{ feedback.email }}</td>
                 <td class="px-4 py-2">{{ feedback.feedback_text }}</td>
-                <td class="px-4 py-2">{{ feedback.created_at }}</td>
+                <td class="px-4 py-2 border border-gray-500">
+                    {{ feedback.submitted_at.strftime('%Y-%m-%d %H:%M:%S') if feedback.submitted_at }}
+                </td>
             </tr>
             {% endfor %}
         </tbody>
